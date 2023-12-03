@@ -13,7 +13,7 @@ const routes = [
     path: '/dashboard',
     component: () => import('layouts/MainLayout.vue'),
     beforeEnter:(to,from,next)=> {
-      if(Store.state.user.isLoggedIn){
+      if(Store.state.user.isLoggedIn || localStorage.getItem('user').token){
         next()
       }else{
         next('/')
@@ -22,6 +22,20 @@ const routes = [
     children: [
       { path: '', component: () => import('pages/dashboard.vue') }
     ]
+  },
+  {
+    name:'category',
+    path: '/category/:category',
+    component: () => import('pages/category.vue'),
+    beforeEnter:(to,from,next)=> {
+      //console.log("check => "+Store.state.user.isLoggedIn+  " " +localStorage.getItem('user').token )
+      if(Store.state.user.isLoggedIn || localStorage.getItem('user').token){
+        next()
+      }else{
+        next('/')
+      }
+    },
+   
   },
 
   // Always leave this as last one,

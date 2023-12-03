@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import createPersistedState from 'vuex-persistedstate'
 import user from './user'
+import products from './products'
 
 Vue.use(Vuex)
 
@@ -16,8 +17,10 @@ Vue.use(Vuex)
 
 const Store = new Vuex.Store({
     modules: {
-      user
+      user,
+      products
     },
+    plugins:[createPersistedState()],
     // enable strict mode (adds overhead!)
     // for dev mode only
     strict: process.env.DEBUGGING

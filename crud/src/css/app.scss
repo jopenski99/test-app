@@ -1,1 +1,7 @@
 // app global css in SCSS form
+.q-carousel__slide{
+    background-size: contain !important;
+}
+.q-field__before{
+    min-width: 9.5vw !important;
+}

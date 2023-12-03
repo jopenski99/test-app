@@ -27,6 +27,7 @@ const actions = {
         console.log(response)
         if(response){
             commit('SET_USER', response)
+            localStorage.setItem('user',JSON.stringify(response))
             return true
         }else{
             return false

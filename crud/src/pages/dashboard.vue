@@ -1,51 +1,61 @@
 <template>
-	<q-page class="flex flex-center">
-		<q-card class="my-card text-center align-center justify-center q-pa-md">
-			<q-card-section>
-				Login
-			</q-card-section>
-			<q-card-section>
-				<div class="row full-width">
-					<div class="col-12">
-						<q-input label="Username" outlined v-model="username" dense />
-					</div>
-					<div class="col-12 q-mt-md">
-						<q-input label="Password" outlined type="password" v-model="password" dense />
-					</div>
-				</div>
-			</q-card-section>
-			<q-card-section>
-				<div class="row full-width">
-					<div class="col-12 q-mt-md">
-						<q-btn color="primary" @click="login()" label="Sign in" />
-					</div>
-				</div>
-			</q-card-section>
-		</q-card>
+	<q-page>
+		<div class="row full-width q-pa-md">
+			<div class="col-12">
+				<span style="font-size: 20px; font-weight: 600;"> Products by categories </span>
+			</div>
+		</div>
+		<div class="row flex full-width justify-center text-center ">
+			<div class="col-2 q-ma-sm items-start" v-for="category in stats.details" :key="category.category">
+				<q-card @click="handleView(category.category)" class="my-card" width="100%" height="150px"
+					style="min-height: 150px;">
+					<q-card-section>
+						<div class="text-h6">{{ localize(category.category) }}</div>
+					</q-card-section>
+					<q-card-section>
+						<span class="text-h6">{{ category.count }}</span>
+					</q-card-section>
+				</q-card>
+			</div>
+		</div>
 	</q-page>
 </template>
 
 
 <script>
-import { mapActions, } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 export default {
 	name: 'PageIndex',
 	data() {
 		return {
-			username: "kminchelle",
-			password: "0lelplR",
+
+		}
+	},
+	async mounted() {
+		await this.fetchStats()
+	},
+	computed: {
+		...mapGetters({
+			stats: 'products/getStatistics',
+		}),
+		formatted() {
+
 		}
 	},
 	methods: {
 		...mapActions({
-			handleLogin: 'user/handleLogin',
+			fetchStats: 'products/fetchStats',
 		}),
-		async login() {
-			let result = await this.handleLogin({ username: this.username, password: this.password })
-			if(result){
-				
-			}
+		localize(str) {
+			return str.charAt(0).toUpperCase() + str.slice(1)
+		},
+		handleView(cat) {
+			this.$router.push({
+				name: "category", 
+				params: { category:cat }
+			})
 		}
+
 	}
 }
 </script>
