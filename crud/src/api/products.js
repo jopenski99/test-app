@@ -21,7 +21,7 @@ export default {
   async getCategories() {
     let return_data = [];
     await dummy.get("/products/categories").then((response) => {
-      console.log(response);
+  /*     console.log(response); */
       return_data = response;
     });
 

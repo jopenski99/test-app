@@ -13,7 +13,7 @@ const routes = [
     path: '/dashboard',
     component: () => import('layouts/MainLayout.vue'),
     beforeEnter:(to,from,next)=> {
-      if(Store.state.user.isLoggedIn || localStorage.getItem('user').token){
+      if(Store.state.user.isLoggedIn || localStorage.getItem('user')){
         next()
       }else{
         next('/')
@@ -24,12 +24,40 @@ const routes = [
     ]
   },
   {
+    path: '/inventory',
+    component: () => import('layouts/MainLayout.vue'),
+    beforeEnter:(to,from,next)=> {
+      if(Store.state.user.isLoggedIn || localStorage.getItem('user')){
+        next()
+      }else{
+        next('/')
+      }
+    },
+    children: [
+      { path: '', component: () => import('pages/products.vue') }
+    ]
+  },
+  {
+    path: '/task',
+    component: () => import('layouts/MainLayout.vue'),
+    beforeEnter:(to,from,next)=> {
+      if(Store.state.user.isLoggedIn || localStorage.getItem('user')){
+        next()
+      }else{
+        next('/')
+      }
+    },
+    children: [
+      { path: '', component: () => import('pages/tasks.vue') }
+    ]
+  },
+  {
     name:'category',
     path: '/category/:category',
     component: () => import('pages/category.vue'),
     beforeEnter:(to,from,next)=> {
       //console.log("check => "+Store.state.user.isLoggedIn+  " " +localStorage.getItem('user').token )
-      if(Store.state.user.isLoggedIn || localStorage.getItem('user').token){
+      if(Store.state.user.isLoggedIn || localStorage.getItem('user')){
         next()
       }else{
         next('/')

@@ -25,7 +25,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 export default {
-	name: 'PageIndex',
+	name: 'Dashboard',
 	data() {
 		return {
 
@@ -33,6 +33,7 @@ export default {
 	},
 	async mounted() {
 		await this.fetchStats()
+		await this.fetchTasks()
 	},
 	computed: {
 		...mapGetters({
@@ -45,6 +46,7 @@ export default {
 	methods: {
 		...mapActions({
 			fetchStats: 'products/fetchStats',
+			fetchTasks: 'user/getTasks'
 		}),
 		localize(str) {
 			return str.charAt(0).toUpperCase() + str.slice(1)

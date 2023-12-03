@@ -1,6 +1,6 @@
 import products from "../api/products";
 import { Notify } from "quasar";
-import { QSpinnerOrbit } from "quasar";
+
 const initialState = () => {
   return {
     products: {},
@@ -12,6 +12,15 @@ const getters = {
   getStatistics(state) {
     return state.statistics;
   },
+  getAll(state) {
+    let all = [];
+    state.statistics.details.forEach((cat) => {
+      	cat.products.forEach((prod) => {
+      	  	all.push(prod);
+      	});
+    });
+    return all;
+  },
 };
 
 const mutations = {
@@ -19,12 +28,11 @@ const mutations = {
     state.statistics = payload;
   },
   SET_PRODUCT_UPDATE(state, payload) {
-    
     state.statistics.details.forEach((category, cindex) => {
-      category.products.forEach((product , pindex) => {
+      category.products.forEach((product, pindex) => {
         if (payload.id == product.id) {
-          console.log(product)
-          console.log(payload)
+          /*  console.log(product)
+          console.log(payload) */
           state.statistics.details[cindex].products[pindex] = payload;
           Notify.create({
             message: "Current data updated",
@@ -40,7 +48,7 @@ const mutations = {
 const actions = {
   async fetchStats({ commit }, payload) {
     let response = await products.getStatistics();
-    console.log(response);
+    /*  console.log(response); */
     if (response) {
       commit("SET_STATISTICS", response);
       return true;
